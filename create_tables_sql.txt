@@ -1,0 +1,67 @@
+-- Departments
+CREATE TABLE Departments (
+    id NUMBER PRIMARY KEY,
+    name VARCHAR2(100),
+    code VARCHAR2(10),
+    description VARCHAR2(255)
+);
+
+-- Students
+CREATE TABLE Students (
+    id NUMBER PRIMARY KEY,
+    name VARCHAR2(100),
+    date_of_birth DATE,
+    age NUMBER,
+    gender CHAR(1),
+    email VARCHAR2(100),
+    phone VARCHAR2(15),
+    address VARCHAR2(255),
+    department_id NUMBER,
+    enrollment_date DATE,
+    FOREIGN KEY (department_id) REFERENCES Departments(id)
+);
+
+-- Courses
+CREATE TABLE Courses (
+    id NUMBER PRIMARY KEY,
+    course_name VARCHAR2(100),
+    credits NUMBER,
+    department_id NUMBER,
+    FOREIGN KEY (department_id) REFERENCES Departments(id)
+);
+
+-- Enrollments
+CREATE TABLE Enrollments (
+    id NUMBER PRIMARY KEY,
+    student_id NUMBER,
+    enrollment_date DATE,
+    academic_year VARCHAR2(9),
+    status VARCHAR2(20),
+    FOREIGN KEY (student_id) REFERENCES Students(id)
+);
+
+-- Student_Courses
+CREATE TABLE Student_Courses (
+    student_id NUMBER,
+    course_id NUMBER,
+    semester VARCHAR2(20),
+    grade DECIMAL(4,2),
+    PRIMARY KEY (student_id, course_id),
+    FOREIGN KEY (student_id) REFERENCES Students(id),
+    FOREIGN KEY (course_id) REFERENCES Courses(id)
+);
+
+-- Users
+CREATE TABLE Users (
+    id NUMBER PRIMARY KEY,
+    username VARCHAR2(50),
+    password VARCHAR2(100),
+    role VARCHAR2(20)
+);
+
+-- Sequences
+CREATE SEQUENCE dept_seq START WITH 1 INCREMENT BY 1;
+CREATE SEQUENCE student_seq START WITH 1 INCREMENT BY 1;
+CREATE SEQUENCE course_seq START WITH 1 INCREMENT BY 1;
+CREATE SEQUENCE enrollment_seq START WITH 1 INCREMENT BY 1;
+CREATE SEQUENCE users_seq START WITH 1 INCREMENT BY 1;
